@@ -18,6 +18,7 @@ export default class TypeOrmConfigService implements TypeOrmOptionsFactory {
       database: this.configService.get<string>('database.postgres.database'),
       autoLoadEntities: true,
       synchronize: true,
+      entities: ['*/*.entity.(t|j)s'],
     };
   }
 }
