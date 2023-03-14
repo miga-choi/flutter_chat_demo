@@ -8,6 +8,7 @@ import configuration from './config/configuration';
 import { TypeOrmConfigService } from './config/database.config';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
+import { WebsocketsModule } from './websockets/websockets.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RoomsModule } from './rooms/rooms.module';
     }),
     UsersModule,
     RoomsModule,
+    WebsocketsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
