@@ -8,18 +8,18 @@ import configuration from './config/configuration';
 import { TypeOrmConfigService } from './config/database.config';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
-import { WebsocketsModule } from './websockets/websockets.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
+    EventsModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useClass: TypeOrmConfigService,
     }),
     UsersModule,
     RoomsModule,
-    WebsocketsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
