@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     socket.onConnect((dynamic _) => print('onConnect'));
     socket.onDisconnect((dynamic _) => print('onDisconnect'));
+    socket.on('fromServer', (dynamic data_) => print('data => $data_'));
   }
 
   @override

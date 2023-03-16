@@ -38,6 +38,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleConnection(client_: Socket, ...args_: any[]) {
     console.log(`handleConnection => `, client_.id);
+    client_.emit('fromServer', 'OK');
     for await (const arg of args_) {
       console.log('arg => ', arg);
     }
