@@ -57,6 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: const Center(
         child: Text('Hello, World!'),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.send),
+        onPressed: () {
+          print('socket.emit');
+          socket.emit('msg', 'test');
+        },
+      ),
     );
   }
 }
