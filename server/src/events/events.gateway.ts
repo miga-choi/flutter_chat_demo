@@ -8,7 +8,7 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { from, map, Observable } from 'rxjs';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
@@ -31,13 +31,14 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     return data;
   }
 
-  handleConnection(client: any, ...args: any[]) {
-    console.log('handleConnection');
-    console.log(client);
+  async handleConnection(client_: Socket, ...args_: any[]) {
+    console.log(`handleConnection => `, client_.id);
+    for await (const arg of args_) {
+      console.log('arg => ', arg);
+    }
   }
 
-  handleDisconnect(client: any) {
-    console.log('handleDisconnect');
-    console.log(client);
+  async handleDisconnect(client_: Socket) {
+    console.log(`handleDisconnect => `, client_.id);
   }
 }
