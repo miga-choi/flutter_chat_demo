@@ -8,6 +8,12 @@ async function bootstrap() {
 
   await app.listen(configServer.get<number>('http.port'));
   app.setGlobalPrefix('api');
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(
+    `Application is running on: ${configServer.get<string>(
+      'http.ssl',
+    )}://${configServer.get<string>('http.domain')}:${configServer.get<string>(
+      'http.port',
+    )}`,
+  );
 }
 bootstrap();
