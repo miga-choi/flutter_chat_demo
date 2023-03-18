@@ -8,6 +8,9 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final TextEditingController _textEditingController = TextEditingController();
+  bool _validate = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   width: 300,
                   child: TextField(
+                    controller: _textEditingController,
                     decoration: InputDecoration(
                       hintText: 'Username',
                       enabledBorder: OutlineInputBorder(
@@ -46,6 +50,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           color: Colors.blue,
                         ),
                       ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(
+                          color: Colors.red,
+                        ),
+                      ),
+                      errorText: _validate ? 'Invalid Username' : null,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(
