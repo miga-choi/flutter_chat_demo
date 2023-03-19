@@ -1,3 +1,4 @@
+import 'package:app/constant.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -9,7 +10,27 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _textEditingController = TextEditingController();
-  bool _validate = false;
+  String _usernameValidate = '';
+
+  void onSignInPressed() async {
+    final String text = _textEditingController.text;
+    if (text.isEmpty) _usernameValidate = 'Username required';
+    if (Constant.usernameReg.hasMatch(text)) {
+      _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController.addListener(() {
+      if (_usernameValidate.isNotEmpty && _textEditingController.text.isNotEmpty) {
+        _usernameValidate = '';
+        setState(() {});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           color: Colors.red,
                         ),
                       ),
-                      errorText: _validate ? 'Invalid Username' : null,
+                      errorText: _usernameValidate.isEmpty ? null : _usernameValidate,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(
@@ -72,7 +93,7 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               width: 200,
               child: TextButton(
-                onPressed: () {},
+                onPressed: onSignInPressed,
                 style: TextButton.styleFrom(backgroundColor: Colors.orange),
                 child: const Text(
                   'Sign In',
