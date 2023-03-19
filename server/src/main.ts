@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configServer = app.get<ConfigService>(ConfigService);
 
+  app.setGlobalPrefix('/api');
   await app.listen(configServer.get<number>('http.port'));
-  app.setGlobalPrefix('api');
   console.log(
     `Application is running on: ${configServer.get<string>(
       'http.ssl',

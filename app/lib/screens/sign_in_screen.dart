@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +18,23 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void onSignInPressed() async {
     final String text = _textEditingController.text;
-    if (text.isEmpty) _usernameValidate = 'Username required';
-    if (!Constant.usernameReg.hasMatch(text)) {
-      _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
+    if (text.isEmpty) {
+      _usernameValidate = 'Username required';
+    } else {
+      if (!Constant.usernameReg.hasMatch(text)) {
+        _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
+      }
+
+      final String body = jsonEncode({'username': text});
+
+      final http.Response response = await http.post(
+        Uri.parse('${Constant.apiUrl}/users/signin'),
+        headers: Constant.httpHeader,
+        body: body,
+      );
+      print(response.body);
     }
     setState(() {});
-
-    final http.Response response = await http.post(
-      Uri.parse('${Constant.apiUrl}/signin'),
-      headers: Constant.httpHeader,
-      body: {'username': text},
-    );
-    print(response.body);
   }
 
   @override
