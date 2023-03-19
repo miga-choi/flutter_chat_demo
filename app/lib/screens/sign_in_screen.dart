@@ -1,5 +1,7 @@
 import 'package:app/constant.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -15,10 +17,17 @@ class _SignInScreenState extends State<SignInScreen> {
   void onSignInPressed() async {
     final String text = _textEditingController.text;
     if (text.isEmpty) _usernameValidate = 'Username required';
-    if (Constant.usernameReg.hasMatch(text)) {
+    if (!Constant.usernameReg.hasMatch(text)) {
       _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
     }
     setState(() {});
+
+    final http.Response response = await http.post(
+      Uri.parse('${Constant.apiUrl}/signin'),
+      headers: Constant.httpHeader,
+      body: {'username': text},
+    );
+    print(response.body);
   }
 
   @override
@@ -77,11 +86,17 @@ class _SignInScreenState extends State<SignInScreen> {
                           color: Colors.red,
                         ),
                       ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(
+                          color: Colors.orange,
+                        ),
+                      ),
                       errorText: _usernameValidate.isEmpty ? null : _usernameValidate,
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
                         borderSide: const BorderSide(
-                          color: Colors.grey,
+                          color: Colors.blue,
                         ),
                       ),
                     ),
