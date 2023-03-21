@@ -7,6 +7,7 @@ import { TypeOrmConfigService } from './config/database.config';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { EventsModule } from './events/events.module';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EventsModule } from './events/events.module';
     }),
     UsersModule,
     RoomsModule,
+    ChatsModule,
   ],
 })
 export class AppModule {
