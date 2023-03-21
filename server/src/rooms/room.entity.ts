@@ -3,9 +3,7 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
   ManyToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -17,15 +15,6 @@ export class Room {
   @Column('varchar')
   public name: string;
 
-  @OneToOne(() => User)
-  @JoinColumn()
-  public from: string;
-
-  @OneToOne(() => Room)
-  @JoinColumn()
-  public to: string;
-
   @ManyToMany(() => User)
-  @JoinTable()
   public users: User[];
 }
