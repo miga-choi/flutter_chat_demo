@@ -1,11 +1,6 @@
+import { Chat } from 'src/chats/chat.entity';
 import { User } from 'src/users/user.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('rooms')
 export class Room {
@@ -15,6 +10,6 @@ export class Room {
   @Column('varchar')
   public name: string;
 
-  @ManyToMany(() => User)
-  public users: User[];
+  @OneToMany(() => Chat, (chat) => chat.to)
+  chats: Chat[];
 }

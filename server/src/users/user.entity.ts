@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Chat } from 'src/chats/chat.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -7,4 +8,7 @@ export class User {
 
   @Column('varchar')
   public name: string;
+
+  @OneToMany(() => Chat, (chat) => chat.from)
+  public chats: Chat[];
 }
