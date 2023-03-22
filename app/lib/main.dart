@@ -1,8 +1,12 @@
 import 'package:app/screens/home_screen.dart';
 import 'package:app/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:realm/realm.dart';
 
 void main() {
+  final appConfig = AppConfiguration('test-wyxwl');
+  final app = App(appConfig);
+
   runApp(const MyApp());
 }
 
