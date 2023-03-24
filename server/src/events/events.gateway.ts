@@ -47,14 +47,4 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async handleDisconnect(client_: Socket) {
     console.log(`handleDisconnect => `, client_.id);
   }
-
-  @SubscribeMessage('room.join')
-  joinChatRoom(client: Socket, roomId: string) {
-    client.join(roomId);
-  }
-
-  @SubscribeMessage('room.leave')
-  leaveChatRoom(client: Socket, roomId: string) {
-    client.leave(roomId);
-  }
 }

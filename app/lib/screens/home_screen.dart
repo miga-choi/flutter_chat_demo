@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     socket = IO.io(
-      'http://192.168.142.234:8080',
+      'http://172.30.1.100:8080',
       IO.OptionBuilder().setTransports(['websocket']).build(),
     );
     socket.onConnect((dynamic _) => print('onConnect'));
