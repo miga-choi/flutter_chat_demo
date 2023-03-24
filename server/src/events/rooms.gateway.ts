@@ -38,4 +38,9 @@ export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async getMessage(@MessageBody() data_: string): Promise<void> {
     console.log('[rooms] data => ', data_);
   }
+
+  @SubscribeMessage('rooms_test')
+  async getRoomsMessage(@MessageBody() data_: string): Promise<void> {
+    console.log('[rooms] rooms_test => ', data_);
+  }
 }

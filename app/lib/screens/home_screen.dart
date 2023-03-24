@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late IO.Socket socket = IO.io(
-    'http://172.30.1.100:8080/rooms',
+    'http://172.30.1.100:8080/',
     IO.OptionBuilder().setTransports(['websocket']).build(),
   );
 
@@ -44,6 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           print('socket.emit');
           socket.emit('msg', 'test');
+          socket.emit('rooms_test', 'this is test message to rooms');
         },
       ),
     );
