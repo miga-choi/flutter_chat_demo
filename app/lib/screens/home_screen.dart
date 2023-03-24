@@ -12,15 +12,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late IO.Socket socket;
+  late IO.Socket socket = IO.io(
+    'http://172.30.1.100:8080/rooms',
+    IO.OptionBuilder().setTransports(['websocket']).build(),
+  );
 
   @override
   void initState() {
     super.initState();
-    socket = IO.io(
-      'http://172.30.1.100:8080',
-      IO.OptionBuilder().setTransports(['websocket']).build(),
-    );
+    // socket = IO.io(
+    //   'http://172.30.1.100:8080/rooms',
+    //   IO.OptionBuilder().setTransports(['websocket']).build(),
+    // );
     socket.onConnect((dynamic _) => print('onConnect'));
     socket.onDisconnect((dynamic _) => print('onDisconnect'));
     socket.on('fromServer', (dynamic data_) => print('from server data => $data_'));

@@ -28,7 +28,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('msg')
   async getMessage(@MessageBody() data_: string): Promise<void> {
-    console.log('data => ', data_);
+    console.log('[default] data_ => ', data_);
   }
 
   @SubscribeMessage('identity')
