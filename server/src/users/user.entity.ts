@@ -1,22 +1,17 @@
 import { Chat } from 'src/chats/chat.entity';
-import { Room } from 'src/rooms/room.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  public id: string;
+  public id?: string;
 
   @Column('varchar')
-  public name: string;
+  public username: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  public access_token?: string;
 
   @OneToMany(() => Chat, (chat) => chat.from)
-  public chats: Chat[];
+  public chats?: Chat[];
 }
