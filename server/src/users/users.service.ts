@@ -9,10 +9,10 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async createUser(user_: User) {
+  async createUser(user_: User): Promise<User> {
     const user = this.usersRepository.create(user_);
-    await this.usersRepository.save(user);
-    return user;
+    const result = await this.usersRepository.save(user);
+    return result;
   }
 
   async findAllUsers(match_: FindOptionsWhere<User>): Promise<User[]> {
@@ -21,6 +21,14 @@ export class UsersService {
 
   async findOneUser(match_: FindOptionsWhere<User>): Promise<User> {
     return this.usersRepository.findOneBy(match_);
+  }
+
+  async updateUser(
+    match_: FindOptionsWhere<User>,
+    user_: User,
+  ): Promise<number> {
+    const result = await this.usersRepository.update(match_, user_);
+    return result.affected;
   }
 
   async remove(userId: string): Promise<void> {
