@@ -11,6 +11,7 @@ import { from, map, Observable } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
+  namespace: 'default',
   cors: {
     origin: '*',
   },

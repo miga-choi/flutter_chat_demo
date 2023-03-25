@@ -27,7 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
       final String body = jsonEncode({'username': text});
 
       final http.Response response = await http.post(
-        Uri.parse('${Constant.apiUrl}/users/signin'),
+        Uri.parse('${Constant.baseUrl}/api/users/signin'),
         headers: Constant.httpHeader,
         body: body,
       );

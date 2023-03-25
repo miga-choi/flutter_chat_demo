@@ -4,8 +4,9 @@ import {
   OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
+  WebSocketServer,
 } from '@nestjs/websockets';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   namespace: 'rooms',
@@ -14,6 +15,9 @@ import { Socket } from 'socket.io';
   },
 })
 export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer()
+  server: Server;
+
   handleConnection(client_: any, ...args_: any[]) {
     console.log('connect to RoomsGateway');
     // console.log(client_);

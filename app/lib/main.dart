@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: false ? const SignInScreen() : const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: true ? const SignInScreen() : const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
