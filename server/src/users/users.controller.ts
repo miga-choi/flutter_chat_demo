@@ -36,7 +36,7 @@ export class UsersController {
   async signIn(
     @Body('username') username_: string,
     @Body('password') password_: string,
-  ): Promise<string> {
+  ): Promise<{ success: boolean; data: any }> {
     const user: User = await this.usersService.findOneUser({
       username: username_,
     });
@@ -54,6 +54,6 @@ export class UsersController {
     if (result <= 0) {
       throw new ConflictException('Sign in error!');
     }
-    return user.access_token;
+    return { success: true, data: user.access_token };
   }
 }

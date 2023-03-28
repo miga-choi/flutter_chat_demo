@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/constant.dart';
+import 'package:app/services/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +13,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final AuthAPI _authAPI = AuthAPI();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _usernameValidate = '';
@@ -37,14 +40,7 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
 
-    final String body = jsonEncode({'username': username});
-
-    final http.Response response = await http.post(
-      Uri.parse('${Constant.baseUrl}/api/users/signin'),
-      headers: Constant.httpHeader,
-      body: body,
-    );
-    print(response);
+    final result = await _authAPI.signIn(username, password);
   }
 
   @override
