@@ -185,7 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: onSignInPressed,
                 style: TextButton.styleFrom(backgroundColor: Colors.orange),
                 child: const Text(
-                  'Sign In',
+                  'Sign Up',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
