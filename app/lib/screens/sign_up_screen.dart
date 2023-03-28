@@ -4,14 +4,14 @@ import 'package:app/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _usernameValidate = '';
@@ -69,7 +69,7 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Sign in'),
+        title: const Text('Sign up'),
       ),
       body: Center(
         child: Column(
@@ -77,7 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
           children: [
             const SizedBox(height: 200),
             const Text(
-              'Sign In',
+              'Sign up',
               style: TextStyle(fontSize: 30, color: Colors.deepPurple),
             ),
             const SizedBox(height: 100),
