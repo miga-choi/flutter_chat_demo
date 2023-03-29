@@ -70,12 +70,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Sign up'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 200),
+            const SizedBox(height: 100),
             const Text(
               'Sign up',
               style: TextStyle(fontSize: 30, color: Colors.deepPurple),
@@ -190,6 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 200),
           ],
         ),
       ),

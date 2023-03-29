@@ -38,6 +38,7 @@ dependencies:
   socket_io_client: ^2.0.1
   http: ^0.13.5
   realm: ^1.0.3
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   flutter_test:

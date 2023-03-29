@@ -20,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    print('home page initState');
     super.initState();
     // socket = IO.io(
     //   'http://172.30.1.100:8080/rooms',

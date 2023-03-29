@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/constant.dart';
+import 'package:app/screens/sign_up_screen.dart';
 import 'package:app/services/auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -69,9 +70,10 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 200),
+            const SizedBox(height: 100),
             const Text(
               'Sign In',
               style: TextStyle(fontSize: 30, color: Colors.deepPurple),
@@ -175,6 +177,25 @@ class _SignInScreenState extends State<SignInScreen> {
               ],
             ),
             const SizedBox(height: 50),
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignUpScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'or Sign up',
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 50),
             SizedBox(
               width: 200,
               child: TextButton(
@@ -186,6 +207,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
+            const SizedBox(height: 200),
           ],
         ),
       ),
