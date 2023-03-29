@@ -15,22 +15,52 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
+  /********************************************************************************
+   ************************************ INSERT ************************************
+   ********************************************************************************/
+  /**
+   * @description Create User
+   * @param user_ :User
+   * @return User
+   */
   async createUser(user_: User): Promise<User> {
     const user: User = this.usersRepository.create(user_);
     const result: User = await this.usersRepository.save(user);
     return result;
   }
 
+  /********************************************************************************
+   ************************************ SELECT ************************************
+   ********************************************************************************/
+  /**
+   * @description Select multiple Users
+   * @param match_ FindOptionsWhere<User>
+   * @return User[]
+   */
   async findAllUsers(match_: FindOptionsWhere<User>): Promise<User[]> {
     const result: User[] = await this.usersRepository.find({ where: match_ });
     return result;
   }
 
+  /**
+   * @description Select single User
+   * @param match_ FindOptionsWhere<User>
+   * @return User User
+   */
   async findOneUser(match_: FindOptionsWhere<User>): Promise<User> {
     const result: User = await this.usersRepository.findOneBy(match_);
     return result;
   }
 
+  /********************************************************************************
+   ************************************ UPDATE ************************************
+   ********************************************************************************/
+  /**
+   * @description Update User
+   * @param match_ FindOptionsWhere<User>
+   * @param user_ User
+   * @return number
+   */
   async updateUser(
     match_: FindOptionsWhere<User>,
     user_: User,
@@ -42,9 +72,17 @@ export class UsersService {
     return result.affected;
   }
 
-  async remove(userId: string): Promise<number> {
+  /********************************************************************************
+   ************************************ DELETE ************************************
+   ********************************************************************************/
+  /**
+   * @description Delete User
+   * @param userId_ string
+   * @return number
+   */
+  async deleteUser(userId_: string): Promise<number> {
     const result: DeleteResult = await this.usersRepository.delete({
-      id: userId,
+      id: userId_,
     });
     return result.affected;
   }
