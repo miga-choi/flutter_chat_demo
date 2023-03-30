@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:app/constant.dart';
 import 'package:app/screens/sign_up_screen.dart';
-import 'package:app/services/auth_api.dart';
+import 'package:app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +14,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final AuthAPI _authAPI = AuthAPI();
+  final AuthService _authService = AuthService();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -41,7 +41,8 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
 
-    final result = await _authAPI.signIn(username, password);
+    final result = await _authService.signIn(username, password);
+
   }
 
   @override

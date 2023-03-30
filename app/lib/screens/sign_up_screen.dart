@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:app/constant.dart';
+import 'package:app/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -12,39 +10,34 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final AuthService _authService = AuthService();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _usernameValidate = '';
   String _passwordValidate = '';
 
-  void onSignInPressed() async {
+  Future<bool> onSignUpPressed() async {
     final String username = _usernameController.text;
     final String password = _passwordController.text;
     if (username.isEmpty) {
       _usernameValidate = 'Username required';
       setState(() {});
-      return;
+      return false;
     }
     if (!Constant.usernameReg.hasMatch(username)) {
       _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
       setState(() {});
-      return;
+      return false;
     }
 
     if (password.isEmpty) {
       _passwordValidate = 'Password required';
       setState(() {});
-      return;
+      return false;
     }
 
-    final String body = jsonEncode({'username': username});
-
-    final http.Response response = await http.post(
-      Uri.parse('${Constant.baseUrl}/api/users/signin'),
-      headers: Constant.httpHeader,
-      body: body,
-    );
-    print(response);
+    return _authService.signUp(username, password);
   }
 
   @override
@@ -189,7 +182,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SizedBox(
               width: 200,
               child: TextButton(
-                onPressed: onSignInPressed,
+                onPressed: () async {
+                  final bool result = await onSignUpPressed();
+                  if (result && context.mounted) {
+                    Navigator.pop(context);
+                  } else {}
+                },
                 style: TextButton.styleFrom(backgroundColor: Colors.orange),
                 child: const Text(
                   'Sign Up',
