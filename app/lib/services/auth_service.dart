@@ -6,9 +6,9 @@ import 'package:app/services/storage_service.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  StorageService _storageService = StorageService();
+  final StorageService _storageService = StorageService();
 
-  Future<bool> signUp(String username, String password) async {
+  Future<ResponseModel> signUp(String username, String password) async {
     final String body = jsonEncode({
       'username': username,
       'password': password,
@@ -18,14 +18,10 @@ class AuthService {
       headers: Constant.httpHeader,
       body: body,
     );
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
-      return responseModel.success;
-    }
-    return false;
+    return ResponseModel.fromJson(jsonDecode(response.body));
   }
 
-  Future<bool> signIn(String username, String password) async {
+  Future<ResponseModel> signIn(String username, String password) async {
     final String body = jsonEncode({
       'username': username,
       'password': password,
@@ -35,14 +31,11 @@ class AuthService {
       headers: Constant.httpHeader,
       body: body,
     );
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
-      if (responseModel.success) {
-        await _storageService.writeStorage(Constant.key, responseModel.data);
-        return true;
-      }
+    final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
+    if (responseModel.success) {
+      await _storageService.writeStorage(Constant.key, responseModel.data);
     }
-    return false;
+    return responseModel;
   }
 
   Future<void> signOut() async {

@@ -1,6 +1,8 @@
 import 'package:app/constant.dart';
+import 'package:app/models/response_model.dart';
 import 'package:app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -17,24 +19,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _usernameValidate = '';
   String _passwordValidate = '';
 
-  Future<bool> onSignUpPressed() async {
+  Future<ResponseModel> onSignUpPressed() async {
     final String username = _usernameController.text;
     final String password = _passwordController.text;
     if (username.isEmpty) {
       _usernameValidate = 'Username required';
       setState(() {});
-      return false;
+      return ResponseModel(success: false);
     }
     if (!Constant.usernameReg.hasMatch(username)) {
       _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
       setState(() {});
-      return false;
+      return ResponseModel(success: false);
     }
 
     if (password.isEmpty) {
       _passwordValidate = 'Password required';
       setState(() {});
-      return false;
+      return ResponseModel(success: false);
     }
 
     return _authService.signUp(username, password);

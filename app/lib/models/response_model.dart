@@ -4,7 +4,7 @@ class ResponseModel {
 
   ResponseModel({
     required this.success,
-    required this.data,
+    this.data,
   });
 
   factory ResponseModel.fromJson(Map<String, dynamic> json) {

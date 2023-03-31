@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:app/constant.dart';
+import 'package:app/models/response_model.dart';
+import 'package:app/screens/room_screen.dart';
 import 'package:app/screens/sign_up_screen.dart';
 import 'package:app/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -21,28 +20,27 @@ class _SignInScreenState extends State<SignInScreen> {
   String _usernameValidate = '';
   String _passwordValidate = '';
 
-  void onSignInPressed() async {
+  Future<ResponseModel> onSignInPressed() async {
     final String username = _usernameController.text;
     final String password = _passwordController.text;
     if (username.isEmpty) {
       _usernameValidate = 'Username required';
       setState(() {});
-      return;
+      return ResponseModel(success: false);
     }
     if (!Constant.usernameReg.hasMatch(username)) {
       _usernameValidate = 'Username should only contain a-z, A-Z, 0-9';
       setState(() {});
-      return;
+      return ResponseModel(success: false);
     }
 
     if (password.isEmpty) {
       _passwordValidate = 'Password required';
       setState(() {});
-      return;
+      return ResponseModel(success: false);
     }
 
-    final result = await _authService.signIn(username, password);
-
+    return _authService.signIn(username, password);
   }
 
   @override
@@ -200,7 +198,17 @@ class _SignInScreenState extends State<SignInScreen> {
             SizedBox(
               width: 200,
               child: TextButton(
-                onPressed: onSignInPressed,
+                onPressed: () async {
+                  final result = await onSignInPressed();
+                  if (context.mounted && result.success) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RoomScreen(),
+                      ),
+                    );
+                  }
+                },
                 style: TextButton.styleFrom(backgroundColor: Colors.orange),
                 child: const Text(
                   'Sign In',
