@@ -10,6 +10,13 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Room list'),
+      ),
+      body: const Center(
+        child: Text('Hello, World!'),
+      ),
+    );
   }
 }

@@ -185,8 +185,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               width: 200,
               child: TextButton(
                 onPressed: () async {
-                  final bool result = await onSignUpPressed();
-                  if (result && context.mounted) {
+                  final ResponseModel result = await onSignUpPressed();
+                  if (result.success && context.mounted) {
                     Navigator.pop(context);
                   } else {}
                 },
