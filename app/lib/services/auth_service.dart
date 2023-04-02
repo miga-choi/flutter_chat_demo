@@ -38,7 +38,17 @@ class AuthService {
     return responseModel;
   }
 
-  Future<void> signOut() async {
-    await _storageService.deleteStorage(Constant.key);
+  Future<ResponseModel> signOut() async {
+    final String body = jsonEncode({});
+    final http.Response response = await http.post(
+      Uri.parse('${Constant.baseUrl}/users/signout'),
+      headers: Constant.httpHeader,
+      body: body,
+    );
+    final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
+    if (responseModel.success) {
+      await _storageService.deleteStorage(Constant.key);
+    }
+    return responseModel;
   }
 }

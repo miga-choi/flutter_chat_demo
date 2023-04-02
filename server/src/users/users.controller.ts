@@ -56,4 +56,11 @@ export class UsersController {
     }
     return { success: true, data: user.access_token };
   }
+
+  @Post('/signout')
+  async signOut(
+    @Body('username') username_: string,
+  ): Promise<{ success: boolean; data: any }> {
+    return { success: true, data: '' };
+  }
 }
