@@ -39,7 +39,8 @@ class AuthService {
   }
 
   Future<ResponseModel> signOut() async {
-    final String body = jsonEncode({});
+    final token = await _storageService.readStorage(Constant.key);
+    final String body = jsonEncode({'token': token});
     final http.Response response = await http.post(
       Uri.parse('${Constant.baseUrl}/users/signout'),
       headers: Constant.httpHeader,

@@ -59,8 +59,22 @@ export class UsersController {
 
   @Post('/signout')
   async signOut(
-    @Body('username') username_: string,
+    @Body('token') token_: string,
   ): Promise<{ success: boolean; data: any }> {
+    const user: User = await this.usersService.findOneUser({
+      access_token: token_,
+    });
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+    user.access_token = null;
+    const result: number = await this.usersService.updateUser(
+      { id: user.id },
+      user,
+    );
+    if (result <= 0) {
+      throw new ConflictException('Sign out error!');
+    }
     return { success: true, data: '' };
   }
 }
