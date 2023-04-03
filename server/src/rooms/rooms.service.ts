@@ -13,6 +13,15 @@ export class RoomsService {
     private readonly userRepository: Repository<User>,
   ) {}
 
+  /********************************************************************************
+   ************************************ INSERT ************************************
+   ********************************************************************************/
+  /**
+   * @description insert Room
+   * @param username_
+   * @param name_
+   * @return Room
+   */
   async createRoom(username_: string, name_: string): Promise<Room> {
     const user: User = await this.userRepository.findOneBy({
       username: username_,
@@ -25,8 +34,28 @@ export class RoomsService {
     return result;
   }
 
+  /********************************************************************************
+   ************************************ SELECT ************************************
+   ********************************************************************************/
+  /**
+   * @description select Room list
+   * @param findOptionsWhere_
+   * @return Room[]
+   */
   async getRooms(findOptionsWhere_: FindOptionsWhere<Room>): Promise<Room[]> {
     const result: Room[] = await this.roomRepository.find({
+      where: findOptionsWhere_,
+    });
+    return result;
+  }
+
+  /**
+   * @description select Room
+   * @param findOptionsWhere_
+   * @return Room
+   */
+  async getRoom(findOptionsWhere_: FindOptionsWhere<Room>): Promise<Room> {
+    const result: Room = await this.roomRepository.findOne({
       where: findOptionsWhere_,
     });
     return result;
