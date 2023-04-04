@@ -14,6 +14,8 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
   final AuthService _authService = AuthService();
 
+  List<String> rooms = <String>[];
+
   Future<ResponseModel> onSignOutPress() async {
     return _authService.signOut();
   }
