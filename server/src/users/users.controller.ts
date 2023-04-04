@@ -18,7 +18,7 @@ export class UsersController {
   async signUp(
     @Body('username') username_: string,
     @Body('password') password_: string,
-  ): Promise<void> {
+  ): Promise<{ success: boolean; data: any }> {
     try {
       const result = await this.usersService.createUser({
         username: username_,
@@ -27,6 +27,7 @@ export class UsersController {
       if (!result) {
         throw new ConflictException('Sign up error!');
       }
+      return { success: true, data: '' };
     } catch (error_) {
       throw new ConflictException('Username already exists!');
     }
