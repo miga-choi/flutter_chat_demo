@@ -15,12 +15,14 @@ export class RoomsController {
     return result;
   }
 
-  @Get()
-  async getRooms(@Body('username') username_: string): Promise<Room[]> {
+  @Get('/user/:username')
+  async getRooms(
+    @Param('username') username_: string,
+  ): Promise<{ success: boolean; data: Room[] }> {
     const result: Room[] = await this.roomsService.getRooms({
       users: { username: username_ },
     });
-    return result;
+    return { success: true, data: result };
   }
 
   @Get(':roomId')

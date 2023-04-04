@@ -204,7 +204,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const RoomScreen(),
+                        builder: (context) => RoomScreen(
+                          username: _usernameController.text,
+                        ),
                       ),
                     );
                   }
