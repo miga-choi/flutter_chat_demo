@@ -59,8 +59,36 @@ class _RoomScreenState extends State<RoomScreen> {
           )
         ],
       ),
-      body: const Center(
-        child: Text('Hello, World!'),
+      body: SafeArea(
+        child: SizedBox(
+          height: 300,
+          child: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            child: Column(
+              children: <Widget>[
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: rooms.length,
+                  itemBuilder: (BuildContext context_, int index_) {
+                    return GestureDetector(
+                      onTap: () {
+                        print(rooms[index_].id);
+                      },
+                      child: ListTile(
+                        title: Text(rooms[index_].id),
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.black, width: 1),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
