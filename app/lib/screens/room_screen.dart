@@ -1,9 +1,11 @@
+import 'package:app/constant.dart';
 import 'package:app/models/response_model.dart';
 import 'package:app/models/room.dart';
 import 'package:app/screens/sign_in_screen.dart';
 import 'package:app/services/api_service.dart';
 import 'package:app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class RoomScreen extends StatefulWidget {
   const RoomScreen({
@@ -34,7 +36,10 @@ class _RoomScreenState extends State<RoomScreen> {
   }
 
   void init() async {
-    rooms = await _apiService.getRooms(widget.username);
+    final List<Room> getRooms = await _apiService.getRooms(widget.username);
+    setState(() {
+      rooms = getRooms;
+    });
   }
 
   @override
@@ -72,12 +77,17 @@ class _RoomScreenState extends State<RoomScreen> {
                   shrinkWrap: true,
                   itemCount: rooms.length,
                   itemBuilder: (BuildContext context_, int index_) {
+                    IO.Socket socket = IO.io(
+                      '${Constant.baseUrl}/rooms/${rooms[index_].id}',
+                      IO.OptionBuilder().setTransports(['websocket']).build(),
+                    );
+                    socket.on('refresh', (dynamic data_) => print('refresh => $data_'));
                     return GestureDetector(
                       onTap: () {
                         print(rooms[index_].id);
                       },
                       child: ListTile(
-                        title: Text(rooms[index_].id),
+                        title: Text(rooms[index_].name),
                         shape: const RoundedRectangleBorder(
                           side: BorderSide(color: Colors.black, width: 1),
                         ),

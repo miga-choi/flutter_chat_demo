@@ -1,5 +1,4 @@
 import 'package:app/constant.dart';
-import 'package:app/screens/sign_in_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 

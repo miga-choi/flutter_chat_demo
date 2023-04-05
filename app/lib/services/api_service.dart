@@ -6,18 +6,20 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   Future<List<Room>> getRooms(String username) async {
-    final String body = jsonEncode({
-      'username': username,
-    });
-    final http.Response response = await http.get(
-      Uri.parse('${Constant.baseUrl}/rooms/user/$username'),
-      headers: Constant.httpHeader,
-    );
-    final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
-    List<Room> rooms = <Room>[];
-    if (responseModel.success) {
-      rooms = Room.fromJsonList(responseModel.data);
+    try {
+      final http.Response response = await http.get(
+        Uri.parse('${Constant.baseUrl}/rooms/user/$username'),
+        headers: Constant.httpHeader,
+      );
+      final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
+      List<Room> rooms = <Room>[];
+      if (responseModel.success) {
+        rooms = Room.fromJsonList(responseModel.data);
+      }
+      return rooms;
+    } catch (err_) {
+      print(err_);
+      return [];
     }
-    return rooms;
   }
 }
