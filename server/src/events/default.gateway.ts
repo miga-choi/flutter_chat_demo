@@ -11,10 +11,8 @@ import { from, map, Observable } from 'rxjs';
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  namespace: 'default',
-  cors: {
-    origin: '*',
-  },
+  namespace: '/default',
+  cors: { origin: '*' },
 })
 export class DefaultGateway
   implements OnGatewayConnection, OnGatewayDisconnect

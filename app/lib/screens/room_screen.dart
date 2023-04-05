@@ -22,6 +22,7 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
   final AuthService _authService = AuthService();
   final ApiService _apiService = ApiService();
+  final Map<String, IO.Socket> socketMap = {};
 
   List<Room> rooms = <Room>[];
 
@@ -77,11 +78,13 @@ class _RoomScreenState extends State<RoomScreen> {
                   shrinkWrap: true,
                   itemCount: rooms.length,
                   itemBuilder: (BuildContext context_, int index_) {
+                    final String id = rooms[index_].id;
                     IO.Socket socket = IO.io(
-                      '${Constant.baseUrl}/rooms/${rooms[index_].id}',
+                      '${Constant.baseUrl}/rooms/$id',
                       IO.OptionBuilder().setTransports(['websocket']).build(),
                     );
-                    socket.on('refresh', (dynamic data_) => print('refresh => $data_'));
+                    socket.on('refresh', (dynamic data_) {});
+                    socketMap[id] = socket;
                     return GestureDetector(
                       onTap: () {
                         print(rooms[index_].id);

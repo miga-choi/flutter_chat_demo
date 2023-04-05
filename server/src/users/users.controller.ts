@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
+import { ResponseInterface } from '../common/response.interface';
 
 @Controller('/users')
 export class UsersController {
@@ -18,7 +19,7 @@ export class UsersController {
   async signUp(
     @Body('username') username_: string,
     @Body('password') password_: string,
-  ): Promise<{ success: boolean; data: any }> {
+  ): Promise<ResponseInterface> {
     try {
       const result = await this.usersService.createUser({
         username: username_,
@@ -37,7 +38,7 @@ export class UsersController {
   async signIn(
     @Body('username') username_: string,
     @Body('password') password_: string,
-  ): Promise<{ success: boolean; data: any }> {
+  ): Promise<ResponseInterface> {
     const user: User = await this.usersService.findOneUser({
       username: username_,
     });
@@ -59,9 +60,7 @@ export class UsersController {
   }
 
   @Post('/signout')
-  async signOut(
-    @Body('token') token_: string,
-  ): Promise<{ success: boolean; data: any }> {
+  async signOut(@Body('token') token_: string): Promise<ResponseInterface> {
     const user: User = await this.usersService.findOneUser({
       access_token: token_,
     });

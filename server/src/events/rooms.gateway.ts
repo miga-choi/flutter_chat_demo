@@ -9,10 +9,8 @@ import {
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
-  namespace: 'rooms',
-  cors: {
-    origin: '*',
-  },
+  namespace: '/rooms',
+  cors: { origin: '*' },
 })
 export class RoomsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
