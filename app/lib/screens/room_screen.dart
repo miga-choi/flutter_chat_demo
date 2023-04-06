@@ -83,7 +83,9 @@ class _RoomScreenState extends State<RoomScreen> {
                       '${Constant.baseUrl}/rooms/$id',
                       IO.OptionBuilder().setTransports(['websocket']).build(),
                     );
-                    socket.on('refresh', (dynamic data_) {});
+                    socket.on('refresh', (dynamic data_) {
+                      print('refresh[$index_] => $data_');
+                    });
                     socketMap[id] = socket;
                     return GestureDetector(
                       onTap: () {
@@ -101,6 +103,19 @@ class _RoomScreenState extends State<RoomScreen> {
               ],
             ),
           ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          print('createChat');
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        backgroundColor: Colors.blue.shade400,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
         ),
       ),
     );
