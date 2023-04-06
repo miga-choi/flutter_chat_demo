@@ -108,6 +108,10 @@ class _RoomScreenState extends State<RoomScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print('createChat');
+          showDialog(
+            context: context,
+            builder: (context) => const AddChatDialog(),
+          );
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
@@ -117,6 +121,25 @@ class _RoomScreenState extends State<RoomScreen> {
           Icons.add,
           color: Colors.white,
         ),
+      ),
+    );
+  }
+}
+
+class AddChatDialog extends StatefulWidget {
+  const AddChatDialog({Key? key}) : super(key: key);
+
+  @override
+  State<AddChatDialog> createState() => _AddChatDialogState();
+}
+
+class _AddChatDialogState extends State<AddChatDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Text('Hello, World!'),
       ),
     );
   }
