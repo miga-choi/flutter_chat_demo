@@ -136,10 +136,78 @@ class AddChatDialog extends StatefulWidget {
 class _AddChatDialogState extends State<AddChatDialog> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: Text('Hello, World!'),
+    return Dialog(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height / 2,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search by username...',
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  errorBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                    borderSide: BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context_, int index_) {
+                        return const Text('Hello,World!');
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
