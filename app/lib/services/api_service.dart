@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:app/constant.dart';
 import 'package:app/models/response_model.dart';
 import 'package:app/models/room.dart';
+import 'package:app/models/user.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -21,5 +22,9 @@ class ApiService {
       print(err_);
       return [];
     }
+  }
+
+  Future<List<User>> searchUsers(String username_) async {
+    return [];
   }
 }

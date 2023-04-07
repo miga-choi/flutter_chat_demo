@@ -1,6 +1,7 @@
 import 'package:app/constant.dart';
 import 'package:app/models/response_model.dart';
 import 'package:app/models/room.dart';
+import 'package:app/models/user.dart';
 import 'package:app/screens/sign_in_screen.dart';
 import 'package:app/services/api_service.dart';
 import 'package:app/services/auth_service.dart';
@@ -134,6 +135,26 @@ class AddChatDialog extends StatefulWidget {
 }
 
 class _AddChatDialogState extends State<AddChatDialog> {
+  final TextEditingController _textEditingController = TextEditingController();
+  List<User> users = <User>[];
+  final ApiService _apiService = ApiService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> searchUser() async {
+    final String username = _textEditingController.text;
+    if (username.isNotEmpty) {
+      users = await _apiService.searchUsers('username');
+    }
+  }
+
+  void clearText() {
+    _textEditingController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -153,6 +174,7 @@ class _AddChatDialogState extends State<AddChatDialog> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
+                controller: _textEditingController,
                 decoration: InputDecoration(
                   hintText: 'Search by username...',
                   enabledBorder: const OutlineInputBorder(
@@ -183,7 +205,7 @@ class _AddChatDialogState extends State<AddChatDialog> {
                     ),
                   ),
                   suffixIcon: IconButton(
-                    onPressed: () {},
+                    onPressed: clearText,
                     icon: const Icon(Icons.close),
                   ),
                 ),
@@ -197,9 +219,14 @@ class _AddChatDialogState extends State<AddChatDialog> {
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: 10,
+                      itemCount: users.length,
                       itemBuilder: (BuildContext context_, int index_) {
-                        return const Text('Hello,World!');
+                        return ListTile(
+                          title: Text(users[index_].name),
+                          shape: const RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.black, width: 1),
+                          ),
+                        );
                       },
                     ),
                   ],
