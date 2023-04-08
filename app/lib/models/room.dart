@@ -13,7 +13,7 @@ class Room {
 
   static List<Room> fromJsonList(List<dynamic> jsonArray) {
     final List<Room> roomList = <Room>[];
-    for (final json in jsonArray) {
+    for (final dynamic json in jsonArray) {
       roomList.add(Room.fromJson(json));
     }
     return roomList;

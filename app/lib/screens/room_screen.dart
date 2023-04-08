@@ -144,11 +144,11 @@ class _AddChatDialogState extends State<AddChatDialog> {
     super.initState();
   }
 
-  Future<void> searchUser() async {
-    final String username = _textEditingController.text;
-    if (username.isNotEmpty) {
-      users = await _apiService.searchUsers('username');
-    }
+  Future<void> searchUser(String username_) async {
+    final List<User> resultUserList = await _apiService.searchUsers(username_);
+    setState(() {
+      users = resultUserList;
+    });
   }
 
   void clearText() {
@@ -175,6 +175,10 @@ class _AddChatDialogState extends State<AddChatDialog> {
             children: [
               TextField(
                 controller: _textEditingController,
+                autofocus: true,
+                onChanged: (String value_) {
+                  searchUser(value_);
+                },
                 decoration: InputDecoration(
                   hintText: 'Search by username...',
                   enabledBorder: const OutlineInputBorder(
@@ -222,7 +226,7 @@ class _AddChatDialogState extends State<AddChatDialog> {
                       itemCount: users.length,
                       itemBuilder: (BuildContext context_, int index_) {
                         return ListTile(
-                          title: Text(users[index_].name),
+                          title: Text(users[index_].username),
                           shape: const RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black, width: 1),
                           ),

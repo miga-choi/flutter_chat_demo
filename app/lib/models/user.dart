@@ -1,11 +1,26 @@
-import 'package:realm/realm.dart';
+import 'dart:convert';
 
-part 'user.g.dart';
+class User {
+  final String id;
+  final String username;
 
-@RealmModel()
-class _User  {
-  @PrimaryKey()
-  late final String id;
+  User({
+    required this.id,
+    required this.username,
+  });
 
-  late String name;
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      username: json['username'],
+    );
+  }
+
+  static List<User> fromJsonList(List<dynamic> jsonList) {
+    List<User> userList = <User>[];
+    for (final dynamic json in jsonList) {
+      userList.add(User.fromJson(json));
+    }
+    return userList;
+  }
 }
