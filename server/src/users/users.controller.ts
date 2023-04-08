@@ -3,22 +3,37 @@ import {
   Body,
   ConflictException,
   Controller,
+  Get,
   NotFoundException,
+  Param,
   Post,
   Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { ResponseInterface } from '../common/response.interface';
+import { Like } from 'typeorm';
 
 @Controller('/users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @Get('/search/:username')
+  async searchUser(
+    @Param('username') username_: string,
+  ): Promise<ResponseInterface> {
+    const result: User[] = await this.usersService.findAllUsers({
+      username: Like(`%${username_}%`),
+    });
+    return { success: true, data: result };
+  }
+
   @Post('/signup')
   async signUp(
-    @Body('username') username_: string,
-    @Body('password') password_: string,
+    @Body('username')
+    username_: string,
+    @Body('password')
+    password_: string,
   ): Promise<ResponseInterface> {
     try {
       const result = await this.usersService.createUser({
@@ -36,8 +51,10 @@ export class UsersController {
 
   @Post('/signin')
   async signIn(
-    @Body('username') username_: string,
-    @Body('password') password_: string,
+    @Body('username')
+    username_: string,
+    @Body('password')
+    password_: string,
   ): Promise<ResponseInterface> {
     const user: User = await this.usersService.findOneUser({
       username: username_,
@@ -60,7 +77,10 @@ export class UsersController {
   }
 
   @Post('/signout')
-  async signOut(@Body('token') token_: string): Promise<ResponseInterface> {
+  async signOut(
+    @Body('token')
+    token_: string,
+  ): Promise<ResponseInterface> {
     const user: User = await this.usersService.findOneUser({
       access_token: token_,
     });
