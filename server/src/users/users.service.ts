@@ -37,8 +37,14 @@ export class UsersService {
    * @param match_ FindOptionsWhere<User>
    * @return User[]
    */
-  async findAllUsers(match_: FindOptionsWhere<User>): Promise<User[]> {
-    const result: User[] = await this.usersRepository.find({ where: match_ });
+  async findAllUsers(
+    match_: FindOptionsWhere<User> | FindOptionsWhere<User>[],
+  ): Promise<User[]> {
+    const result: User[] = await this.usersRepository
+      .createQueryBuilder()
+      .where(match_[0])
+      .andWhere(match_[1])
+      .getMany();
     return result;
   }
 

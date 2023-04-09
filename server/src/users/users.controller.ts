@@ -12,19 +12,21 @@ import {
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { ResponseInterface } from '../common/response.interface';
-import { Like } from 'typeorm';
+import { Like, Not } from 'typeorm';
 
 @Controller('/users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
-  @Get('/search/:username')
+  @Get('/search/:username/:search')
   async searchUser(
     @Param('username') username_: string,
+    @Param('search') search_: string,
   ): Promise<ResponseInterface> {
-    const result: User[] = await this.usersService.findAllUsers({
-      username: Like(`%${username_}%`),
-    });
+    const result: User[] = await this.usersService.findAllUsers([
+      { username: Not(username_) },
+      { username: Like(`%${search_}%`) },
+    ]);
     return { success: true, data: result };
   }
 
