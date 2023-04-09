@@ -231,19 +231,21 @@ class _AddChatDialogState extends State<AddChatDialog> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: users.length,
-                      itemBuilder: (BuildContext context_, int index_) {
-                        return ListTile(
-                          title: Text(users[index_].username),
-                          shape: const RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 1),
+                    users.isEmpty
+                        ? const Text('No any User found...')
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: users.length,
+                            itemBuilder: (BuildContext context_, int index_) {
+                              return ListTile(
+                                title: Text(users[index_].username),
+                                shape: const RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.black, width: 1),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
                   ],
                 ),
               )
