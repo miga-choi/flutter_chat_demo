@@ -111,7 +111,7 @@ class _RoomScreenState extends State<RoomScreen> {
           print('createChat');
           showDialog(
             context: context,
-            builder: (context) => const AddChatDialog(),
+            builder: (context) => AddChatDialog(username: widget.username),
           );
         },
         shape: RoundedRectangleBorder(
@@ -128,7 +128,12 @@ class _RoomScreenState extends State<RoomScreen> {
 }
 
 class AddChatDialog extends StatefulWidget {
-  const AddChatDialog({Key? key}) : super(key: key);
+  const AddChatDialog({
+    Key? key,
+    required this.username,
+  }) : super(key: key);
+
+  final String username;
 
   @override
   State<AddChatDialog> createState() => _AddChatDialogState();
@@ -142,10 +147,16 @@ class _AddChatDialogState extends State<AddChatDialog> {
   @override
   void initState() {
     super.initState();
+    searchUser('null');
   }
 
-  Future<void> searchUser(String username_) async {
-    final List<User> resultUserList = await _apiService.searchUsers(username_);
+  Future<void> searchUser(String search_) async {
+    List<User> resultUserList = <User>[];
+    if (search_.isNotEmpty) {
+      resultUserList = await _apiService.searchUsers(widget.username, search_);
+    } else {
+      resultUserList = await _apiService.searchUsers(widget.username, 'null');
+    }
     setState(() {
       users = resultUserList;
     });

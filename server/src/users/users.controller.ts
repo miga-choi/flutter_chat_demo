@@ -25,7 +25,7 @@ export class UsersController {
   ): Promise<ResponseInterface> {
     const result: User[] = await this.usersService.findAllUsers([
       { username: Not(username_) },
-      { username: Like(`%${search_}%`) },
+      search_ === 'null' ? {} : { username: Like(`%${search_}%`) },
     ]);
     return { success: true, data: result };
   }

@@ -24,9 +24,9 @@ class ApiService {
     }
   }
 
-  Future<List<User>> searchUsers(String username_) async {
+  Future<List<User>> searchUsers(String username_, String search_) async {
     final http.Response response = await http.get(
-      Uri.parse('${Constant.baseUrl}/users/search/$username_'),
+      Uri.parse('${Constant.baseUrl}/users/search/$username_/$search_'),
       headers: Constant.httpHeader,
     );
     final ResponseModel responseModel = ResponseModel.fromJson(jsonDecode(response.body));
